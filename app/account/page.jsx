@@ -47,18 +47,15 @@ export default function Page() {
   }
 
   return (
-    <div className='w-full'>
-      <h1>Account Setting</h1>
+    <div className='w-full bg-black py-6   px-6'>
+      <h1 className=' text-white text-[20px] font-extrabold '>Account Setting</h1>
       <div>
         <div>
-          <div className='bg-gray-500 my-5 border-b-8 border-b-blue-700'>
-            <h2>Basic Info</h2>
-            <p>Profile Picture</p>
+          <div className=' bg-[#40434878] rounded-md '>
             <ProfileImage  imageUrl={`https://egyptos.runasp.net/${profileData?.imageUrl}`} />
+            <PersonalInfo fetchEndpoint={`https://egyptos.runasp.net/api/Account/Profile`} />
           </div>
-          <div className='flex  justify-evenly'>
-                <PersonalInfo fetchEndpoint={`https://egyptos.runasp.net/api/Account/Profile`} />
-          </div>
+         
           <div>
             <AccountSecurity/>
           </div>

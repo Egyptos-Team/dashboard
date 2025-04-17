@@ -24,3 +24,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* إخفاء الأسهم */
+.custom-scroll::-webkit-scrollbar-button {
+  display: none;
+}
+@layer utilities {
+  /* إخفاء شريط التمرير (لكن التمرير يظل يعمل) */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* إخفاء الشريط العمودي */
+  .no-scrollbar::-webkit-scrollbar:vertical {
+    display: none;
+  }
+
+  /* إخفاء الشريط الأفقي */
+  .no-scrollbar::-webkit-scrollbar:horizontal {
+    display: none;
+  }
+}
