@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
-import { ChevronRightIcon ,ChevronLeftIcon ,BuildingOfficeIcon } from "@heroicons/react/24/solid";
+import { ChevronRightIcon ,ChevronLeftIcon ,BuildingOfficeIcon ,BriefcaseIcon } from "@heroicons/react/24/solid";
 
 
 export default function Sidebar() {
@@ -53,7 +53,7 @@ export default function Sidebar() {
     { name: "All User", href: "/user", icon: UserIcon },
     { name: "Profile", href: "/account", icon: LockClosedIcon },
     { name: "hotel", href: "/hotel", icon: BuildingOfficeIcon },
-    { name: "الإعدادات", href: "/user", icon: UserIcon },
+    { name: "guide ", href: "/guide", icon: BriefcaseIcon  },
   ];
 
   return (

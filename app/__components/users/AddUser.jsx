@@ -5,8 +5,10 @@ import {
   UserIcon,
   GlobeAltIcon,
   MagnifyingGlassIcon,
-  EyeIcon, EyeSlashIcon ,
-  TrashIcon
+  EyeIcon,
+  EyeSlashIcon,
+  TrashIcon,
+  ExclamationCircleIcon
 } from "@heroicons/react/24/outline";
 
 export default function AddUser() {
@@ -94,7 +96,6 @@ export default function AddUser() {
   };
 
   const handleAddUser = async () => {
-
     if (
       !newUser.firstName ||
       !newUser.lastName ||
@@ -109,7 +110,6 @@ export default function AddUser() {
       return;
     }
 
-
     if (!validatePassword(newUser.password)) {
       setErrorMessage(
         "Password must be at least 8 characters long and contain an uppercase letter, a lowercase letter, a number, and a special character."
@@ -118,7 +118,6 @@ export default function AddUser() {
     }
 
     try {
-
       const res = await fetch("https://egyptos.runasp.net/api/Users/Add", {
         method: "POST",
         headers: {
@@ -131,8 +130,7 @@ export default function AddUser() {
       if (res.ok) {
         const added = await res.json();
 
-
-        setUsers((prev) => [...prev, added]); 
+        setUsers((prev) => [...prev, added]);
         setFilteredUsers((prev) => [...prev, added]);
 
         setShowAddForm(false);
@@ -146,7 +144,7 @@ export default function AddUser() {
           password: "",
           roles: [""],
         });
-        setErrorMessage(""); 
+        setErrorMessage("");
       } else {
         const errorData = await res.json();
         if (errorData.errors) {
@@ -228,35 +226,48 @@ export default function AddUser() {
                     {user.nationalId}
                   </td>
                   <td className="border p-2 text-center py-10 border-gray-300">
-                    <button
-                      className={`px-2 py-2 rounded-md text-center text-[13px]  text-white ${
-                        user.roles == "Admin"
-                          ? "bg-[#C62828]"
-                          : user.roles == "TourGuide"
-                          ? "bg-[#00C896]"
-                          : user.roles == "User"
-                          ? "bg-[#2684FF]"
-                          : "bg-transparent"
-                      }`}
-                    >
-                      {user.roles == "Admin" && (
-                        <ShieldExclamationIcon className="h-4 w-4 inline-block mr-2" />
-                      )}
-                      {user.roles == "TourGuide" && (
-                        <GlobeAltIcon className="h-4 w-4 inline-block mr-2" />
-                      )}
-                      {user.roles == "User" && (
-                        <UserIcon className="h-4 w-4 inline-block mr-2" />
-                      )}
-                      {user.roles}
-                    </button>
+                  <button
+  className={`px-2 py-2 rounded-md text-center text-[13px] text-white ${
+    user.roles?.length > 0
+      ? user.roles[user.roles.length - 1] === "Admin"
+        ? "bg-[#C62828]"
+        : user.roles[user.roles.length - 1] === "TourGuide"
+        ? "bg-[#00C896]"
+        : user.roles[user.roles.length - 1] === "User"
+        ? "bg-[#2684FF]"
+        : "bg-gray-400"
+      : "bg-orange-500" // If no roles
+  }`}
+>
+  {/* Icon + Role */}
+  {user.roles?.length > 0 ? (
+    <>
+      {user.roles[user.roles.length - 1] === "Admin" && (
+        <ShieldExclamationIcon className="h-4 w-4 inline-block mr-2" />
+      )}
+      {user.roles[user.roles.length - 1] === "TourGuide" && (
+        <GlobeAltIcon className="h-4 w-4 inline-block mr-2" />
+      )}
+      {user.roles[user.roles.length - 1] === "User" && (
+        <UserIcon className="h-4 w-4 inline-block mr-2" />
+      )}
+      {user.roles[user.roles.length - 1]}
+    </>
+  ) : (
+    <>
+      <ExclamationCircleIcon className="h-4 w-4 inline-block mr-2" />
+      Not Confirmed
+    </>
+  )}
+</button>
+
                   </td>
                   <td className="px-4 py-2 m-auto w-24 text-center">
                     <button
                       className="bg-[#C62828] text-white px-4 cursor-pointer items-center  hover:bg-red-300 flex mx-1 text-[13px] py-2 rounded"
                       onClick={() => handleDelete(user.email)}
                     >
-                        <TrashIcon className="h-4 w-4 text-white inline-block mr-1" />
+                      <TrashIcon className="h-4 w-4 text-white inline-block mr-1" />
                       Delete
                     </button>
                   </td>
@@ -338,27 +349,27 @@ export default function AddUser() {
           </select>
 
           <div className="relative">
-      <input
-        type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        className="p-2 border rounded border-white placeholder:text-white text-white w-full pr-10"
-        value={newUser.password}
-        onChange={(e) =>
-          setNewUser({ ...newUser, password: e.target.value })
-        }
-      />
-      <button
-        type="button"
-        className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-white"
-        onClick={() => setShowPassword(!showPassword)}
-      >
-        {showPassword ? (
-          <EyeSlashIcon className="h-5 w-5" />
-        ) : (
-          <EyeIcon className="h-5 w-5" />
-        )}
-      </button>
-    </div>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className="p-2 border rounded border-white placeholder:text-white text-white w-full pr-10"
+              value={newUser.password}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password: e.target.value })
+              }
+            />
+            <button
+              type="button"
+              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-white"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="h-5 w-5" />
+              ) : (
+                <EyeIcon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
           <select
             className="p-2 border rounded border-white placeholder:text-white text-white"
             value={newUser.roles[0]}
